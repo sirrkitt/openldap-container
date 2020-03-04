@@ -1,0 +1,4 @@
+dn: $BASEDN
+objectClass: dcObject
+objectClass: organizationalUnit
+ou: $BASEDN
