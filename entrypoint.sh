@@ -22,7 +22,7 @@ then
 		echo "Setting rootdn to cn=$ROOTDN,$BASEDN"
 		echo "Selected password hash is $PWHASH"
 		#check if pass hash set for root password
-		if [ "$PWHASH" == "{MD5}" ] || [ "$PWHASH" == "{SMD5}" ] || [ "$PWHASH" == "{SSHA}" ] || [ "$PWHASH" == "{SHA}" ] || [ "$PWHASH" == "{CLEARTEXT}" ] || [ "$PWHASH" == "{PBKDF2}" ] || [ "$PWHASH" == "{PBKDF2-SHA1}" ] || [ "$PWHASH" == "{PBKDF2-SHA256}" ] || [ "$PWHASH" == "{PBKDF-SHA512}" ] || [ "$PWHASH" == "{SHA256}" ] || [ "$PWHASH" == "{SSHA256}" ] || [ "$PWHASH" == "{SHA384}" ] || [ "$PWHASH" == "{SSHA384}" ] || [ "$PWHASH" == "{SHA512}" ] || [ "$PWHASH" == "{SSHA512}" ] || [ "$PWHASH" == "{ARGON2}" ]
+		if [ "$PWHASH" == "{MD5}" ] || [ "$PWHASH" == "{SMD5}" ] || [ "$PWHASH" == "{CRYPT}" ] || [ "$PWHASH" == "{SSHA}" ] || [ "$PWHASH" == "{SHA}" ] || [ "$PWHASH" == "{CLEARTEXT}" ] || [ "$PWHASH" == "{PBKDF2}" ] || [ "$PWHASH" == "{PBKDF2-SHA1}" ] || [ "$PWHASH" == "{PBKDF2-SHA256}" ] || [ "$PWHASH" == "{PBKDF-SHA512}" ] || [ "$PWHASH" == "{SHA256}" ] || [ "$PWHASH" == "{SSHA256}" ] || [ "$PWHASH" == "{SHA384}" ] || [ "$PWHASH" == "{SSHA384}" ] || [ "$PWHASH" == "{SHA512}" ] || [ "$PWHASH" == "{SSHA512}" ] || [ "$PWHASH" == "{ARGON2}" ]
 		then
 			echo "Valid password hash selected"
 			ENCROOTPW="$(/usr/sbin/slappasswd -o module-load=pw-sha2 -o module-load=pw-argon2 -s "$ROOTPW" -h "$PWHASH" -n)"
@@ -59,8 +59,8 @@ fi
 if [ ! "$SSL" == "NOPE" ]
 then
 	echo "Starting slapd and listening on SSL"
-	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:///" -d 0
+	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 0
 else
 	echo "Starting slapd"
-	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:///" -d 0
+	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 0
 fi

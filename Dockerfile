@@ -15,10 +15,10 @@ COPY entrypoint.sh /entrypoint.sh
 RUN	echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&\
 	apk update --no-cache && \
 	apk add -U --no-cache openldap@edge openldap-back-mdb@edge openldap-overlay-all@edge openldap-passwd-pbkdf2@edge openldap-passwd-sha2@edge argon2 libsodium-dev gettext && \
-	mkdir -p /config /data /ssl /run/openldap && \
-	chown -R ldap:ldap /config /data /run/openldap && \
+	mkdir -p /config /data /ssl /run/openldap /socket && \
+	chown -R ldap:ldap /config /data /run/openldap /socket && \
 	chown -R root:root /ssl && \
-	chmod -R 0700 /config /data /ssl &&\
+	chmod -R 0700 /config /data /ssl /socket &&\
 	chmod a+x /entrypoint.sh
 
 COPY slapd.gen	/etc/openldap/slapd.gen
@@ -34,6 +34,6 @@ RUN ln -s /usr/lib/openldap/pw-argon2.so.0.0.0 /usr/lib/openldap/pw-argon2.so.0 
 EXPOSE 389
 EXPOSE 636
 
-VOLUME ["/config", "/data", "/ssl"]
+VOLUME ["/config", "/data", "/ssl", "/socket"]
 
 ENTRYPOINT ["/entrypoint.sh"]
