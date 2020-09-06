@@ -1,5 +1,5 @@
 FROM sirrkitt/openldap-build-argon2 AS argon2
-FROM alpine:3.11
+FROM alpine:3.12
 LABEL maintainer="Jacob Lemus Peschel <jacob@tlacuache.us>"
 ENV BASEDN="dc=example,dc=org"
 ENV ROOTDN="root"
