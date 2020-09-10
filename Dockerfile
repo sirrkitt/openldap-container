@@ -7,11 +7,9 @@ COPY entrypoint.sh /entrypoint.sh
 COPY --from=builder /home/builder/packages/usr/x86_64/openldap*.apk /root/
 
 RUN	apk update --no-cache && \
-	apk add -U --no-cache libsasl libuuid libltdl libldap libsodium libcrypto1.1 libssl1.1 && \
-	apk add --allow-untrusted /root/openldap.apk && \
+	apk add -U --no-cache libsasl libuuid libltdl libsodium libcrypto1.1 libssl1.1 && \
+	apk add --allow-untrusted /root/openldap*.apk && \
 	mkdir -p /config /data /ssl /run/openldap /socket && \
-	addgroup --system ldap && \
-	adduser --system --ingroup ldap --disabled-password --no-create-home ldap && \
 	chown -R ldap:ldap /config /data /run/openldap /socket && \
 	chown -R root:root /ssl && \
 	chmod -R 0700 /config /data /ssl /socket &&\
