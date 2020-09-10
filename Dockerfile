@@ -4,7 +4,7 @@ LABEL maintainer="Jacob Lemus Peschel <jacob@tlacuache.us>"
 ENV SSL="NOPE"
 
 COPY entrypoint.sh /entrypoint.sh
-COPY --from=builder /home/builder/packages/usr/x86_64/openldap*.apk /root/openldap.apk
+COPY --from=builder /home/builder/packages/usr/x86_64/openldap*.apk /root/
 
 RUN	apk update --no-cache && \
 	apk add -U --no-cache libsasl libuuid libltdl libldap libsodium libcrypto1.1 libssl1.1 && \
