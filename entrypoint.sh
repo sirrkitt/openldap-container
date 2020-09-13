@@ -14,19 +14,19 @@ fi
 
 chown -R ldap:ldap /data /config /ssl
 
-if [ ! "$DEBUG" == "NOPE" ]
+if [ "$DEBUG" == "NOPE" ]
 then
-	if [ ! "$SSL" == "NOPE" ]
+	if [ "$SSL" == "NOPE" ]
+	then
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi"
+	else
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi"
+	fi
+else
+	if [ "$SSL" == "NOPE" ]
 	then
 		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 255
 	else
 		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 255
-	fi
-else
-	if [ ! "$SSL" == "NOPE" ]
-	then
-		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi"
-	else
-		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" 
 	fi
 fi
