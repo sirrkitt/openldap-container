@@ -12,9 +12,20 @@ then
 	return 1
 fi
 
-if [ ! "$SSL" == "NOPE" ]
+
+if [ ! "$DEBUG" == "NOPE" ]
 then
-	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 0
+	if [ ! "$SSL" == "NOPE" ]
+	then
+		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 255
+	else
+		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 255
+	fi
 else
-	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 0
+	if [ ! "$SSL" == "NOPE" ]
+	then
+		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 0
+	else
+		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 0
+	fi
 fi
