@@ -12,7 +12,7 @@ then
 	return 1
 fi
 
-if [ ! "INIT" == "NOPE" ]
+if [ ! "$INIT" == "NOPE" ]
 then
 	if [ "$(ls -A /config)" ]
 	then
