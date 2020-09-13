@@ -12,7 +12,17 @@ then
 	return 1
 fi
 
+if [ ! "INIT" == "NOPE" ]
+then
+	if [ ! "$(ls -A $DIR)" ]
+		echo "Existing config, cannot init new config"
+		return 1
+	else
+		/usr/sbin/slaptest -f /slapd.conf -F /config -n0
+		chown -R ldap:ldap /config
+fi
 
+fi
 if [ ! "$DEBUG" == "NOPE" ]
 then
 	if [ ! "$SSL" == "NOPE" ]
