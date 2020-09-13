@@ -14,7 +14,7 @@ fi
 
 if [ ! "INIT" == "NOPE" ]
 then
-	if [ ! "$(ls -A $DIR)" ]
+	if [ ! "$(ls -A /config" ]
 	then
 		echo "Existing config, cannot init new config"
 		return 1
