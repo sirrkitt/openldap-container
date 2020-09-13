@@ -3,7 +3,6 @@ FROM alpine:3.12
 LABEL maintainer="Jacob Lemus Peschel <jacob@tlacuache.us>"
 ENV SSL="NOPE"
 ENV DEBUG="NOPE"
-ENV INIT="NOPE"
 
 COPY entrypoint.sh /entrypoint.sh
 COPY slapd.conf slapd.conf

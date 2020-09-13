@@ -12,31 +12,21 @@ then
 	return 1
 fi
 
-if [ ! "$INIT" == "NOPE" ]
-then
-	if [ "$(ls -A /config)" ]
-	then
-		echo "Existing config, cannot init new config"
-		return 1
-	else
-		/usr/sbin/slaptest -f /slapd.conf -F /config -n0
-		chown -R ldap:ldap /config
-fi
+chown -R ldap:ldap /data /config /ssl
 
-fi
 if [ ! "$DEBUG" == "NOPE" ]
 then
 	if [ ! "$SSL" == "NOPE" ]
 	then
-		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 255
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 255
 	else
-		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 255
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 255
 	fi
 else
 	if [ ! "$SSL" == "NOPE" ]
 	then
-		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 0
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi"
 	else
-		exec /usr/sbin/slapd -u ldap -g ldap -F /config -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 0
+		exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" 
 	fi
 fi
