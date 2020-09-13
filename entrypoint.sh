@@ -17,3 +17,4 @@ then
 	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldaps:/// ldapi://%2Fsocket%2Fldapi" -d 0
 else
 	exec /usr/sbin/slapd -u ldap -g ldap -f /config/slapd.conf -h "ldap:/// ldapi://%2Fsocket%2Fldapi" -d 0
+fi
