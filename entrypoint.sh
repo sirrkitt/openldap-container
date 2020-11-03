@@ -15,8 +15,9 @@ fi
 addgroup -S -g $GID ldap
 adduser -S -H -h /data -G ldap -g ldap -u $UID -s /sbin/nologin ldap
 
-chown -R ldap:ldap /data /config /ssl /run/openldap /socket
-chmod -R 0700 /config /data /ssl /socket
+chown -R ldap:ldap /data /config /ssl /run/openldap
+chmod -R 0700 /config /data /ssl
+chown	root:root /socket
 
 if [ "$CONFIG" == "OLD" ]
 then
